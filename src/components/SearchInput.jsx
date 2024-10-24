@@ -5,8 +5,9 @@ const SearchInput = ({ onSearch }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
+    if (!input.trim()) return;
     onSearch(input);
+    setInput("");
   };
 
   return (

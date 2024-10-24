@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { apiURL } from "./util/api";
-
 import SearchInput from "./SearchInput";
 import FilterCountry from "./FilterCountry";
-
 import { Link } from "react-router-dom";
 
 const AllCountries = () => {
@@ -11,70 +9,42 @@ const AllCountries = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const getAllCountries = async () => {
+  const fetchData = async (endpoint) => {
     try {
-      const res = await fetch(`${apiURL}/all`);
-
+      const res = await fetch(endpoint);
       if (!res.ok) throw new Error("Something went wrong!");
-
       const data = await res.json();
-
-      console.log(data);
-
       setCountries(data);
-
-      setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
       setError(error.message);
-    }
-  };
-
-  const getCountryByName = async (countryName) => {
-    try {
-      const res = await fetch(`${apiURL}/name/${countryName}`);
-
-      if (!res.ok) throw new Error("Not found any country!");
-
-      const data = await res.json();
-      setCountries(data);
-
+    } finally {
       setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      setError(error.message);
-    }
-  };
-
-  const getCountryByRegion = async (regionName) => {
-    try {
-      const res = await fetch(`${apiURL}/region/${regionName}`);
-
-      if (!res.ok) throw new Error("Failed...");
-
-      const data = await res.json();
-      setCountries(data);
-
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      setError(false);
     }
   };
 
   useEffect(() => {
-    getAllCountries();
+    fetchData(`${apiURL}/all`);
   }, []);
+
+  const handleSearch = (countryName) => {
+    setIsLoading(true);
+    fetchData(`${apiURL}/name/${countryName}`);
+  };
+
+  const handleFilter = (regionName) => {
+    setIsLoading(true);
+    fetchData(`${apiURL}/region/${regionName}`);
+  };
 
   return (
     <div className="all-country-wrapper">
       <div className="country-top">
         <div className="search">
-          <SearchInput onSearch={getCountryByName} />
+          <SearchInput onSearch={handleSearch} />
         </div>
 
         <div className="filter">
-          <FilterCountry onSelect={getCountryByRegion} />
+          <FilterCountry onSelect={handleFilter} />
         </div>
       </div>
 
@@ -83,21 +53,16 @@ const AllCountries = () => {
         {error && !isLoading && <h4>{error}</h4>}
 
         {countries?.map((country) => (
-          <Link to={`/country/${country.name.common}`}>
+          <Link key={country.cca3} to={`/country/${country.name.common}`}>
             <div className="country-card">
               <div className="country-img">
-                <img src={country.flags.png} alt="" />
+                <img src={country.flags.png} alt={`${country.name.common} flag`} />
               </div>
-
               <div className="country-data">
                 <h3>{country.name.common}</h3>
-                <h6>
-                  {" "}
-                  Population:{" "}
-                  {new Intl.NumberFormat().format(country.population)}
-                </h6>
+                <h6> Population: {new Intl.NumberFormat().format(country.population)}</h6>
                 <h6> Region: {country.region}</h6>
-                <h6>Capital: {country.capital}</h6>
+                <h6> Capital: {country.capital?.[0]}</h6>
               </div>
             </div>
           </Link>

@@ -1,10 +1,40 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 
+:root {
+    --background-color: hsl(207, 26%, 17%);
+    --card-bg-color: hsl(209, 23%, 22%);
+    --text-color: #fff;
+    --font-family: "Lora", serif;
+}
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: "Lora", serif;
+    font-family: var(--font-family);
+}
+
+body {
+    background: var(--background-color);
+}
+
+.header {
+    background: var(--card-bg-color);
+    color: var(--text-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    z-index: 10;
+}
+
+.header h5 {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    color: #fff;
 }
 
 .container {
@@ -13,26 +43,19 @@
     margin: auto !important;
 }
 
-body {
-    background: hsl(207, 26%, 17%);
+.country-card,
+input,
+select,
+button {
+    background: var(--card-bg-color);
+    color: var(--text-color);
 }
 
-.header {
-    width: 100%;
-    height: 70px;
-    line-height: 70px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: hsl(209, 23%, 22%);
-    z-index: 11;
-}
-
-.header h5 {
+.country-top {
     display: flex;
     align-items: center;
-    font-size: 1.6rem;
-    color: #fff;
+    justify-content: space-between;
+    margin-top: 50px;
 }
 
 .country-bottom {
@@ -45,8 +68,6 @@ body {
 .country-card {
     width: 300px;
     border-radius: 5px;
-    background: hsl(209, 23%, 22%);
-    color: #fff;
 }
 
 .country-img img {
@@ -84,37 +105,19 @@ body {
     margin-top: 15px;
 }
 
-input {
+input,
+select {
+    font-size: 1rem;
     padding: 10px 25px;
-    color: #fff;
-    border-radius: 5px;
-    background: hsl(209, 23%, 22%);
+    margin-bottom: 50px;
     border: none;
     outline: none;
-    margin-bottom: 50px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 ::placeholder {
     color: #fff;
-}
-
-.country-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 50px;
-}
-
-select {
-    padding: 10px 25px;
-    background: hsl(209, 23%, 22%);
-    margin-bottom: 50px;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
 }
 
 .country-info-wrapper {
@@ -135,9 +138,7 @@ select {
 
 button {
     padding: 10px 25px;
-    color: #fff;
     font-size: 1.2rem;
-    background: hsl(209, 23%, 22%);
     border: none;
     outline: none;
     cursor: pointer;
