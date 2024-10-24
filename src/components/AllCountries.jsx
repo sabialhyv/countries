@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { apiURL } from "../util/api";
+import { apiURL } from "./util/api";
 
 import SearchInput from "./SearchInput";
 import FilterCountry from "./FilterCountry";
@@ -50,7 +50,7 @@ const AllCountries = () => {
     try {
       const res = await fetch(`${apiURL}/region/${regionName}`);
 
-      if (!res.ok) throw new Error("Failed..........");
+      if (!res.ok) throw new Error("Failed...");
 
       const data = await res.json();
       setCountries(data);
@@ -67,8 +67,8 @@ const AllCountries = () => {
   }, []);
 
   return (
-    <div className="all__country__wrapper">
-      <div className="country__top">
+    <div className="all-country-wrapper">
+      <div className="country-top">
         <div className="search">
           <SearchInput onSearch={getCountryByName} />
         </div>
@@ -78,18 +78,18 @@ const AllCountries = () => {
         </div>
       </div>
 
-      <div className="country__bottom">
-        {isLoading && !error && <h4>Loading........</h4>}
+      <div className="country-bottom">
+        {isLoading && !error && <h4>Loading...</h4>}
         {error && !isLoading && <h4>{error}</h4>}
 
         {countries?.map((country) => (
           <Link to={`/country/${country.name.common}`}>
-            <div className="country__card">
-              <div className="country__img">
+            <div className="country-card">
+              <div className="country-img">
                 <img src={country.flags.png} alt="" />
               </div>
 
-              <div className="country__data">
+              <div className="country-data">
                 <h3>{country.name.common}</h3>
                 <h6>
                   {" "}

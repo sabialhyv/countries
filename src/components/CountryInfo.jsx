@@ -33,24 +33,24 @@ const CountryInfo = () => {
   }, [countryName]);
 
   return (
-    <div className="country__info__wrapper">
+    <div className="country-info-wrapper">
       <button>
         <Link to="/">Back</Link>
       </button>
 
-      {isLoading && !error && <h4>Loading........</h4>}
+      {isLoading && !error && <h4>Loading...</h4>}
       {error && !isLoading && { error }}
 
       {country?.map((country, index) => (
-        <div className="country__info__container" key={index}>
-          <div className="country__info-img">
+        <div className="country-info-container" key={index}>
+          <div className="country-info-img">
             <img src={country.flags.png} alt="" />
           </div>
 
-          <div className="country__info">
+          <div className="country-info">
             <h3>{country.name.common}</h3>
 
-            <div className="country__info-left">
+            <div className="country-info-left">
               <h5>
                 Population:{" "}
                 <span>
@@ -60,9 +60,7 @@ const CountryInfo = () => {
               <h5>
                 Region: <span>{country.region}</span>
               </h5>
-              <h5>
-                Sub Region: <span>{country.subregion}</span>
-              </h5>
+              {country.subregion ? <h5>Sub Region: <span>{country.subregion}</span></h5> : null}
               <h5>
                 Capital: <span>{country.capital}</span>
               </h5>
